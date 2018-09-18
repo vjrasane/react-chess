@@ -1,0 +1,123 @@
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+ol, ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
+.square {
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 50px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 50px;
+}
+
+.piece {
+  height: 90%;
+  width: 90%;
+  margin-top: 2px;
+}
+
+.coordinate {
+  background: #fff;
+  background-color: transparent;
+  border: 0px;
+  /* font-size: 24px; */
+  /* font-weight: bold; */
+  line-height: 34px;
+  height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 34px;
+}
+
+.vertical {
+  height: 48px;
+  margin-top: 0px;
+}
+
+.horizontal {
+  width: 52px;
+  margin-left: 0px;
+}
+
+.white {
+    background: #ffffcc;
+}
+
+.black {
+    background: #663300;
+}
+
+.green {
+  background: #9bf442;
+}
+
+.orange {
+  background: #f4bc42;
+}
+
+.red {
+  background: #ef0909;
+}
+
+.blue {
+  background: #639af2;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.queen_query {
+  background: #ffffff;
+  z-index: 1;
+  position: absolute;
+  height: 75px;
+  width: 310px;
+  border: 3px solid #999;
+  flex-direction: row;
+  float: left;
+}
+
+.pieceButton {
+  width: 24.35%;
+  height: 99%;
+  border: 1px solid #999;
+  flex-direction: row;
+  float: left;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+}
+
+.game-info {
+  margin-left: 20px;
+}
