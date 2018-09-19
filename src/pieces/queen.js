@@ -2,7 +2,6 @@
 import white from '../images/queen_white.png'
 import black from '../images/queen_black.png'
 
-
 export class Queen {
   static letter = "Q"
   static name = "queen"

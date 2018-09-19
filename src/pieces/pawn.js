@@ -1,4 +1,4 @@
-import { cardinals, diagonals } from "../directions";
+import { cardinals } from "../directions";
 
 import white from "../images/pawn_white.png";
 import black from "../images/pawn_black.png";
@@ -12,7 +12,7 @@ export class Pawn {
     this.image = { white, black }[this.color];
 
     this.direction = { white: cardinals.up, black: cardinals.down }[this.color];
-    this.startRow = { white: 1, black: 6}[this.color]
+    this.startRow = { white: 1, black: 6 }[this.color];
   }
 
   moves(pos, board) {
@@ -55,4 +55,4 @@ export class Pawn {
   }
 }
 
-export default Pawn
+export default Pawn;

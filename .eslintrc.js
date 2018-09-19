@@ -1,3 +1,6 @@
 module.exports = {
-  extends: "react-app"
+  extends: ["standard", "standard-react"],
+  rules: {
+    "no-console": "warn"
+  }
 };
