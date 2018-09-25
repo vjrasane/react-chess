@@ -1,14 +1,17 @@
 import { diagonals, cardinals } from '../directions'
-
-export const inBounds = pos =>
-  pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8
+import { inBounds } from '../state'
 
 const toDirection = (pos, dir, state) => {
   const moves = []
   let current = pos.to(dir)
   while (inBounds(current)) {
     const piece = state.at(current)
-    if (!piece || piece.color !== state.at(pos).color) {
+    if(piece) {
+      if(piece.color !== state.at(pos).color) {
+        moves.push(current)
+      }
+      break
+    } else {
       moves.push(current)
     }
     current = current.to(dir)
@@ -18,7 +21,7 @@ const toDirection = (pos, dir, state) => {
 
 const directionMoves = (pos, state, directions) =>
   Object.values(directions).reduce(
-    (acc, curr) => [...acc, toDirection(pos, curr, state)],
+    (acc, curr) => [...acc, ...toDirection(pos, curr, state)],
     []
   )
 

@@ -29,12 +29,27 @@ ol, ul {
   padding: 0;
   text-align: center;
   width: 50px;
+  position: relative;
+}
+
+.indicator {
+  opacity: 0.5;
+
+  height: 30%;
+  width: 30%;
+  
+  top: 35%;
+  left: 35%;
+  position: absolute;
 }
 
 .piece {
   height: 90%;
   width: 90%;
-  margin-top: 2px;
+
+  top: 5%;
+  left: 5%;
+  position: absolute;
 }
 
 .coordinate {

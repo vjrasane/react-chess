@@ -1,27 +1,36 @@
 import React from 'react'
 import { last } from 'lodash'
 import { connect } from 'react-redux'
-import { maybe } from '../utils'
 import { beginMove, endMove } from '../store/moves'
 import PropTypes from 'prop-types'
 
+import legalIndicator from '../images/green_dot.png'
+
 const squareColor = pos => ['black', 'white'][(pos.x + pos.y) % 2]
 
-const Square = ({ position, move, color, piece, state, beginMove, endMove }) => {
-  const dropPiece = () => endMove(move, position)
-  const dragPiece = () => beginMove(piece, position, state)
+const Square = ({ position, move, piece, state, beginMove, endMove }) => {
+  // handles drop on a square and executes the move if it is legal
+  const dropPieceOnSquare = () => move.legal && endMove(move, position)
+  // handles a piece drop when it returns to its original square due to illegal move, clearing indicators
+  const dropPiece = () => !move.legal && endMove(move, position)
+  // handles a begin of a square drag, if there is no piece being dragged already
+  const dragPiece = () => !move.source && beginMove(piece, position, state)
 
   return (
     <div
-      className={ 'square ' + color }
-      onDrop={ dropPiece }
-      onDragOver={ ({ preventDefault }) => preventDefault() }
+      className={ 'square ' + squareColor(position) }
+      onDrop={ dropPieceOnSquare }
+      onDragOver={ ev => ev.preventDefault() }
       id={ position.notation }>
-      {piece ? <img
+      {piece && <img
         src={ piece.image }
         onDragStart={ dragPiece }
+        onDragEnd={ dropPiece }
         alt=""
-        className="piece" /> : null}
+        className="piece" />}
+      {move.legal && <img
+        src={ legalIndicator }
+        className="indicator" />}
     </div>
   )
 }
@@ -37,6 +46,7 @@ Square.propTypes = {
 
 const mapStateToProps = (/* state */ { history, moves }, /* props */ { position }) => ({
   state: last(history),
+  piece: last(history).at(position),
   move: {
     legal:
       // any legal moves for currently dragged piece?
@@ -50,22 +60,9 @@ const mapStateToProps = (/* state */ { history, moves }, /* props */ { position 
 
 const actionCreators = { beginMove, endMove }
 
-const mergeProps = ({ move, state }, dispatch, { position }) => ({
-  // determine color based on position and move legality
-  color: move.legal ? 'green' : squareColor(position),
-  // get piece from board state
-  piece: maybe(state.at(position), p => p.object),
-  // pass rest of required props
-  position,
-  move,
-  state,
-  ...dispatch
-})
-
 const CONNECTED = connect(
   mapStateToProps,
-  actionCreators,
-  mergeProps
+  actionCreators
 )(Square)
 
 export { Square as RawComponent }

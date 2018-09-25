@@ -1,6 +1,6 @@
 import white from '../images/knight_white.png'
 import black from '../images/knight_black.png'
-
+import Piece from './piece'
 import { cardinals, diagonals } from '../directions'
 
 const jumps = [
@@ -14,13 +14,12 @@ const jumps = [
   cardinals.right.to(diagonals.right_down)
 ]
 
-export default class Knight {
+export default class Knight extends Piece {
   static letter = 'N'
   static type = 'knight'
 
   constructor(color) {
-    this.color = color
-    this.image = { white, black }[color]
+    super(color, { white, black })
   }
 
   moves = (pos, state) =>

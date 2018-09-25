@@ -1,14 +1,14 @@
 import white from '../images/bishop_white.png'
 import black from '../images/bishop_black.png'
+import Piece from './piece'
 import { diagonalMoves } from './movement'
 
-export default class Bishop {
+export default class Bishop extends Piece {
   static type = 'bishop'
   static letter = 'B'
 
   constructor(color) {
-    this.color = color
-    this.image = { white, black }[this.color]
+    super(color, { white, black })
   }
 
   moves = (pos, state) => diagonalMoves(pos, state)

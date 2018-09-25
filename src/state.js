@@ -1,18 +1,9 @@
 import { times, clone } from 'lodash'
 import { forLetter, pawn } from './pieces'
-import coord from './coordinates'
 
-const officers = (color, row) =>
-  'RNBQKBNR'.split('').map((l, i) => ({
-    object: forLetter(l)[color],
-    position: coord(i, row)
-  }))
-
-const pawns = color =>
-  times(8, c => ({
-    object: pawn[color],
-    position: coord(c, pawn[color].startRow)
-  }))
+const officers = color => 'RNBQKBNR'.split('').map(l => forLetter(l)[color])
+const empty = () => times(8, () => {})
+const pawns = color => times(8, () => pawn[color])
 
 const init = {
   turn: 'white',
@@ -20,35 +11,30 @@ const init = {
     white: ['kings', 'queens'],
     black: ['kings', 'queens']
   },
-  pieces: [
-    ...officers('white', 0),
-    ...officers('black', 7),
-    ...pawns('white'),
-    ...pawns('black')
-  ]
+  board: [officers('white'), pawns('white'), ...times(4, () => empty()), pawns('black'), officers('black')]
 }
 
 class State {
   constructor(state) {
-    const { castling, turn, pieces } = state || init
+    const { castling, turn, board } = state || init
     this.castling = clone(castling)
     this.turn = turn
-    this.pieces = clone(pieces)
+    this.board = clone(board)
   }
 
-  at = (pos) => this.pieces.find(p => p.position.equals(pos))
+  at = pos => inBounds(pos) && this.board[pos.y][pos.x]
+  put = (piece, pos) => inBounds(pos) && (this.board[pos.y][pos.x] = piece)
+  take = (pos) => this.put(undefined, pos)
 
   move = (source, target) => {
     const moved = new State(this)
-
-    const sourcePiece = moved.at(source)
-    const targetPiece = moved.at(target)
-
-    sourcePiece.position = target
-    targetPiece && moved.pieces.splice(moved.pieces.indexOf(targetPiece), 1)
-
+    moved.put(moved.at(source), target)
+    moved.take(source)
     return moved
   }
 }
+
+export const inBounds = pos =>
+  pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8
 
 export default State

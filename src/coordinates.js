@@ -1,5 +1,6 @@
 import { notation } from './utils'
 import { Direction } from './directions'
+
 class Coordinates extends Direction {
   constructor(x, y) {
     super(x, y)

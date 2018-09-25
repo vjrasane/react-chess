@@ -1,13 +1,21 @@
 import white from '../images/king_white.png'
 import black from '../images/king_black.png'
+import Piece from './piece'
+import { cardinals, diagonals } from '../directions'
 
-export default class King {
+export default class King extends Piece {
   static letter = 'K'
   static type = 'king'
 
   constructor(color) {
-    this.color = color
-    this.image = { white, black }[this.color]
-    // this.pawn_checks = this.color === 'white' ? [ [-1,1], [1,1] ] : [ [-1,-1], [1,-1] ]
+    super(color, { white, black })
   }
+  // this.pawn_checks = this.color === 'white' ? [ [-1,1], [1,1] ] : [ [-1,-1], [1,-1] ]
+  // }
+  moves = (pos, state) =>
+    Object.values({ ...cardinals, ...diagonals }).reduce((acc, dir) => {
+      const move = pos.to(dir)
+      const piece = state.at(move)
+      return !piece || piece.color !== this.color ? [...acc, move] : acc
+    }, [])
 }
