@@ -1,4 +1,4 @@
-import { times } from 'lodash'
+import { times, clone } from 'lodash'
 import { forLetter, pawn } from './pieces'
 import coord from './coordinates'
 
@@ -30,10 +30,24 @@ const init = {
 
 class State {
   constructor(state) {
-    const { castling, turn, pieces } = state || {}
-    this.castling = castling || init.castling
-    this.turn = turn || init.turn
-    this.pieces = pieces || init.pieces
+    const { castling, turn, pieces } = state || init
+    this.castling = clone(castling)
+    this.turn = turn
+    this.pieces = clone(pieces)
+  }
+
+  at = (pos) => this.pieces.find(p => p.position.equals(pos))
+
+  move = (source, target) => {
+    const moved = new State(this)
+
+    const sourcePiece = moved.at(source)
+    const targetPiece = moved.at(target)
+
+    sourcePiece.position = target
+    targetPiece && moved.pieces.splice(moved.pieces.indexOf(targetPiece), 1)
+
+    return moved
   }
 }
 

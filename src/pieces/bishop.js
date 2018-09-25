@@ -1,5 +1,6 @@
 import white from '../images/bishop_white.png'
 import black from '../images/bishop_black.png'
+import { diagonalMoves } from './movement'
 
 export default class Bishop {
   static type = 'bishop'
@@ -10,4 +11,5 @@ export default class Bishop {
     this.image = { white, black }[this.color]
   }
 
+  moves = (pos, state) => diagonalMoves(pos, state)
 }

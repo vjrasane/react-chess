@@ -1,15 +1,17 @@
 import white from '../images/knight_white.png'
 import black from '../images/knight_black.png'
 
-const knight_moves = [
-  [-2, 1],
-  [-2, -1],
-  [2, 1],
-  [2, -1],
-  [-1, 2],
-  [1, 2],
-  [-1, -2],
-  [1, -2]
+import { cardinals, diagonals } from '../directions'
+
+const jumps = [
+  cardinals.up.to(diagonals.left_up),
+  cardinals.up.to(diagonals.right_up),
+  cardinals.down.to(diagonals.right_down),
+  cardinals.down.to(diagonals.left_down),
+  cardinals.left.to(diagonals.left_up),
+  cardinals.left.to(diagonals.left_down),
+  cardinals.right.to(diagonals.right_up),
+  cardinals.right.to(diagonals.right_down)
 ]
 
 export default class Knight {
@@ -21,4 +23,9 @@ export default class Knight {
     this.image = { white, black }[color]
   }
 
+  moves = (pos, state) =>
+    jumps.map(j => pos.to(j)).filter(p => {
+      const piece = state.at(p)
+      return !piece || piece.color !== this.color
+    })
 }

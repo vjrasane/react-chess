@@ -1,15 +1,28 @@
-export const cardinals = {
-  up: [0, 1],
-  down: [0, -1],
-  left: [-1, 0],
-  right: [1, 0]
+export class Direction {
+  constructor(x, y) {
+    this.x = x
+    this.y = y
+  }
+
+  to = direction => new Direction(this.x + direction.x, this.y + direction.y)
+
+  equals = other => this.x === other.x && this.y === other.y
 }
-// const cardinals_values = Object.keys(cardinals).map(k => cardinals[k]);
+
+const dir = (x, y) => new Direction(x, y)
+
+export const cardinals = {
+  up: dir(0, 1),
+  down: dir(0, -1),
+  left: dir(-1, 0),
+  right: dir(1, 0)
+}
 
 export const diagonals = {
-  left_up: [-1, 1],
-  left_down: [-1, -1],
-  right_up: [1, 1],
-  right_down: [1, -1]
+  left_up: dir(-1, 1),
+  left_down: dir(-1, -1),
+  right_up: dir(1, 1),
+  right_down: dir(1, -1)
 }
-// const diagonals_values = Object.keys(diagonals).map(k => diagonals[k]);
+
+export default dir

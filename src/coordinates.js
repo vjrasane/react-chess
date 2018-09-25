@@ -1,13 +1,10 @@
 import { notation } from './utils'
-
-class Coordinates {
+import { Direction } from './directions'
+class Coordinates extends Direction {
   constructor(x, y) {
-    this.x = x
-    this.y = y
+    super(x, y)
     this.notation = notation(this.x, this.y)
   }
-
-  equals = other => this.x === other.x && this.y === other.y
 }
 
 export default (x, y) => new Coordinates(x, y)
