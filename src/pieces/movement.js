@@ -1,4 +1,4 @@
-import { diagonals, cardinals } from '../directions'
+import { diagonals, cardinals } from '../coordinates'
 import { inBounds } from '../state'
 
 const toDirection = (pos, dir, state) => {

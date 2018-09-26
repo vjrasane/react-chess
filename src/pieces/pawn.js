@@ -1,4 +1,4 @@
-import { cardinals } from '../directions'
+import { cardinals } from '../coordinates'
 import { inBounds } from '../state'
 import white from '../images/pawn_white.png'
 import black from '../images/pawn_black.png'

@@ -1,7 +1,7 @@
 import white from '../images/knight_white.png'
 import black from '../images/knight_black.png'
 import Piece from './piece'
-import { cardinals, diagonals } from '../directions'
+import { cardinals, diagonals } from '../coordinates'
 
 const jumps = [
   cardinals.up.to(diagonals.left_up),

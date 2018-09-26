@@ -23,6 +23,7 @@ class State {
   }
 
   at = pos => inBounds(pos) && this.board[pos.y][pos.x]
+  
   put = (piece, pos) => inBounds(pos) && (this.board[pos.y][pos.x] = piece)
   take = (pos) => this.put(undefined, pos)
 
