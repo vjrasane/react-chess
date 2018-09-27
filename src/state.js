@@ -23,11 +23,11 @@ class State {
   }
 
   at = pos => inBounds(pos) && this.board[pos.y][pos.x]
-  
-  put = (piece, pos) => inBounds(pos) && (this.board[pos.y][pos.x] = piece)
-  take = (pos) => this.put(undefined, pos)
 
-  move = (source, target) => {
+  put = (piece, pos) => inBounds(pos) && (this.board[pos.y][pos.x] = piece)
+  take = pos => this.put(undefined, pos)
+
+  move = ({ source, target }) => {
     const moved = new State(this)
     moved.put(moved.at(source), target)
     moved.take(source)
@@ -35,7 +35,6 @@ class State {
   }
 }
 
-export const inBounds = pos =>
-  pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8
+export const inBounds = pos => pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8
 
 export default State

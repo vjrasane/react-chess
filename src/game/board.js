@@ -1,25 +1,45 @@
 import React from 'react'
-
-import { times } from 'lodash'
+import { connect } from 'react-redux'
+import { last } from 'lodash'
 import Square from './square'
 import coord from '../coordinates'
 
-const square = pos => (
-  <Square
-    position={ pos }
-    key={ pos.notation } />
-)
-
-const Board = () => (
-  <div className="board-area">
-    {times(8, y => (
-      <div
-        key={ 'row ' + y }
-        className="board-row">
-        {times(8, x => square(coord(x, 7 - y)))}
-      </div>
-    ))}
+const Row = ({ squares, rowNum, state }) => (
+  <div className="board-row">
+    {squares.map((piece, colNum) => {
+      const pos = coord(colNum, rowNum)
+      return (
+        <Square
+          piece={ piece }
+          state={ state }
+          position={ pos }
+          key={ pos.notation() } />
+      )
+    })}
   </div>
 )
 
-export default Board
+const Board = ({ state }) => (
+  <div className="board-area">
+    {[...state.board].reverse().map((squares, revRow) => {
+      const rowNum = 7 - revRow
+      return (
+        <Row
+          key={ 'row' + rowNum }
+          squares={ squares }
+          rowNum={ rowNum }
+          state={ state } />
+      )
+    })}
+  </div>
+)
+
+const mapStateToProps = (/* store */ { history, moves }) => ({
+  state: last(history),
+  moves: moves.legal
+})
+
+const CONNECTED = connect(mapStateToProps)(Board)
+
+export { Board as RawComponent }
+export default CONNECTED

@@ -1,5 +1,4 @@
 import React from 'react'
-import { last } from 'lodash'
 import { connect } from 'react-redux'
 import { beginMove, endMove } from '../store/moves'
 import PropTypes from 'prop-types'
@@ -21,7 +20,7 @@ const Square = ({ position, move, piece, state, beginMove, endMove }) => {
       className={ 'square ' + squareColor(position) }
       onDrop={ dropPieceOnSquare }
       onDragOver={ ev => ev.preventDefault() }
-      id={ position.notation }>
+      id={ position.notation() }>
       {piece && <img
         src={ piece.image }
         onDragStart={ dragPiece }
@@ -37,24 +36,22 @@ const Square = ({ position, move, piece, state, beginMove, endMove }) => {
 
 Square.propTypes = {
   position: PropTypes.shape({
-    notation: PropTypes.string,
+    notation: PropTypes.func,
     x: PropTypes.number,
     y: PropTypes.number
   }).isRequired,
   piece: PropTypes.object
 }
 
-const mapStateToProps = (/* state */ { history, moves }, /* props */ { position }) => ({
-  state: last(history),
-  piece: last(history).at(position),
+const mapStateToProps = (/* store */ { moves }, /* props */ { position }) => ({
   move: {
+    // store move source and piece
+    ...moves,
     legal:
       // any legal moves for currently dragged piece?
       moves.legal &&
       // is this square one of the legal moves?
-      moves.legal.some(m => (m.target ? m.target.equals(position) : m.equals(position))),
-    // store move source
-    source: moves.source
+      moves.legal.some(m => (m.target ? m.target.equals(position) : m.equals(position)))
   }
 })
 

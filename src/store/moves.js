@@ -1,10 +1,7 @@
 export default (state = {}, action) => {
   switch (action.type) {
   case 'BEGIN_MOVE':
-    return {
-      source: action.source,
-      legal: action.legal
-    }
+    return { ...action.data }
   case 'END_MOVE':
     return {} // clear move in progress
   default:
@@ -14,13 +11,17 @@ export default (state = {}, action) => {
 
 export const beginMove = (piece, source, state) => ({
   type: 'BEGIN_MOVE',
-  source,
-  legal: piece.moves(source, state)
+  data: {
+    source,
+    piece,
+    legal: piece.moves(source, state)
+  }
 })
 
-export const endMove = ({ source, legal }, target) => ({
+export const endMove = (move, target) => ({
   type: 'END_MOVE',
-  source,
-  target,
-  legal
+  data: {
+    ...move,
+    target
+  }
 })

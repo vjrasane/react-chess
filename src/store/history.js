@@ -7,11 +7,11 @@ export default (state = [], action) => {
     return [new State()]
   case 'END_MOVE':
     // was move legal ?
-    return action.legal 
+    return action.data.legal ?
       // execute legal move
-      ? [...state, last(state).move(action.source, action.target)]
+      [...state, last(state).move(action.data)] :
       // otherwise return previous state
-      : state
+      state
   default:
     return state
   }
