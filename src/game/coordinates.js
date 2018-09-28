@@ -1,4 +1,4 @@
-import { notation } from './utils'
+import { notation } from '../utils'
 
 class Coordinates {
   constructor(x, y) {

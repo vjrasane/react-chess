@@ -1,4 +1,4 @@
-import State from '../state'
+import State from '../game/state'
 import { last } from 'lodash'
 
 export default (state = [], action) => {
@@ -6,11 +6,11 @@ export default (state = [], action) => {
   case 'INIT_GAME':
     return [new State()]
   case 'END_MOVE':
-    // was move legal ?
-    return action.data.legal ?
-      // execute legal move
-      [...state, last(state).move(action.data)] :
-      // otherwise return previous state
+    // is move possible ?
+    return action.data
+      ? // execute legal move
+      [...state, action.data.execute(last(state))]
+      : // otherwise return previous state
       state
   default:
     return state

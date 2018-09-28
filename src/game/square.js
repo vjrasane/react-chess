@@ -9,11 +9,11 @@ const squareColor = pos => ['black', 'white'][(pos.x + pos.y) % 2]
 
 const Square = ({ position, move, piece, state, beginMove, endMove }) => {
   // handles drop on a square and executes the move if it is legal
-  const dropPieceOnSquare = () => move.legal && endMove(move, position)
+  const dropPieceOnSquare = () => move.here && endMove(move.here)
   // handles a piece drop when it returns to its original square due to illegal move, clearing indicators
-  const dropPiece = () => !move.legal && endMove(move, position)
+  const dropPiece = () => !move.here && endMove()
   // handles a begin of a square drag, if there is no piece being dragged already
-  const dragPiece = () => !move.source && beginMove(piece, position, state)
+  const dragPiece = () => !move.ongoing && beginMove(piece.moves(position, state))
 
   return (
     <div
@@ -27,7 +27,7 @@ const Square = ({ position, move, piece, state, beginMove, endMove }) => {
         onDragEnd={ dropPiece }
         alt=""
         className="piece" />}
-      {move.legal && <img
+      {move.here && <img
         src={ legalIndicator }
         className="indicator" />}
     </div>
@@ -45,13 +45,8 @@ Square.propTypes = {
 
 const mapStateToProps = (/* store */ { moves }, /* props */ { position }) => ({
   move: {
-    // store move source and piece
-    ...moves,
-    legal:
-      // any legal moves for currently dragged piece?
-      moves.legal &&
-      // is this square one of the legal moves?
-      moves.legal.some(m => (m.target ? m.target.equals(position) : m.equals(position)))
+    ongoing: moves.length,
+    here: moves.find(m => m.target.equals(position)) // move on this square
   }
 })
 

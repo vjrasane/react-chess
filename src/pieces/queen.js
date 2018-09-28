@@ -1,6 +1,6 @@
 import white from '../images/queen_white.png'
 import black from '../images/queen_black.png'
-import { cardinalMoves, diagonalMoves } from './movement'
+import { cardinalMoves, diagonalMoves } from '../game/movement'
 import Piece from './piece'
 
 export default class Queen extends Piece {

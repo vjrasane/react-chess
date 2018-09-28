@@ -1,6 +1,6 @@
 import white from '../images/rook_white.png'
 import black from '../images/rook_black.png'
-import { cardinalMoves } from './movement'
+import { cardinalMoves } from '../game/movement'
 import Piece from './piece'
 
 export default class Rook extends Piece {

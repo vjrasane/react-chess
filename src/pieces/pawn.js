@@ -1,5 +1,6 @@
-import { cardinals } from '../coordinates'
-import { inBounds } from '../state'
+import { cardinals } from '../game/coordinates'
+import { inBounds } from '../game/state'
+import { Move } from '../game/movement'
 import white from '../images/pawn_white.png'
 import black from '../images/pawn_black.png'
 import Piece from './piece'
@@ -9,23 +10,20 @@ export default class Pawn extends Piece {
   static letter = ''
 
   constructor(color) {
-    super(color, { white, black })
+    super(color, { white, black }, { white: 1, black: 6 })
 
     this.direction = { white: cardinals.up, black: cardinals.down }[this.color]
-    this.startRow = { white: 1, black: 6 }[this.color]
   }
 
   moves = (pos, state) => {
     const moves = []
     const once = pos.to(this.direction)
     if (!state.at(once)) {
-      moves.push(once)
+      moves.push(new Move(once, pos, this))
       const twice = once.to(this.direction)
       if (pos.y === this.startRow && !state.at(twice)) {
-        moves.push({
-          target: twice,
-          type: 'DOUBLE'
-        })
+        // TODO: double move
+        moves.push(new Move(twice, pos, this))
       }
     }
 
@@ -33,12 +31,10 @@ export default class Pawn extends Piece {
       if (inBounds(m)) {
         const piece = state.at(m)
         if (piece && piece.color !== this.color) {
-          moves.push(m)
+          moves.push(new Move(m, pos, this))
         } else if (state.enpassant && m.equals(state.enpassant)) {
-          moves.push({
-            target: m,
-            type: 'ENPASSANT'
-          })
+          // TODO: enpassant move
+          moves.push(new Move(m, pos, this))
         }
       }
     })

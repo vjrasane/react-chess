@@ -1,27 +1,20 @@
-export default (state = {}, action) => {
+export default (state = [], action) => {
   switch (action.type) {
   case 'BEGIN_MOVE':
-    return { ...action.data }
+    return [...action.data]
   case 'END_MOVE':
-    return {} // clear move in progress
+    return []
   default:
     return state
   }
 }
 
-export const beginMove = (piece, source, state) => ({
+export const beginMove = moves => ({
   type: 'BEGIN_MOVE',
-  data: {
-    source,
-    piece,
-    legal: piece.moves(source, state)
-  }
+  data: moves
 })
 
-export const endMove = (move, target) => ({
+export const endMove = move => ({
   type: 'END_MOVE',
-  data: {
-    ...move,
-    target
-  }
+  data: move
 })

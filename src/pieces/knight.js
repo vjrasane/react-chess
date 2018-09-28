@@ -1,7 +1,8 @@
 import white from '../images/knight_white.png'
 import black from '../images/knight_black.png'
+import { Move } from '../game/movement'
 import Piece from './piece'
-import { cardinals, diagonals } from '../coordinates'
+import { cardinals, diagonals } from '../game/coordinates'
 
 const jumps = [
   cardinals.up.to(diagonals.left_up),
@@ -23,8 +24,8 @@ export default class Knight extends Piece {
   }
 
   moves = (pos, state) =>
-    jumps.map(j => pos.to(j)).filter(p => {
-      const piece = state.at(p)
+    jumps.map(j => new Move(pos.to(j), pos, this)).filter(m => {
+      const piece = state.at(m.target)
       return !piece || piece.color !== this.color
     })
 }

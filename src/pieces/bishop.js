@@ -1,7 +1,7 @@
 import white from '../images/bishop_white.png'
 import black from '../images/bishop_black.png'
 import Piece from './piece'
-import { diagonalMoves } from './movement'
+import { diagonalMoves } from '../game/movement'
 
 export default class Bishop extends Piece {
   static type = 'bishop'
