@@ -1,8 +1,8 @@
-import white from '../images/knight_white.png'
-import black from '../images/knight_black.png'
-import { Move } from '../game/movement'
+import white from '../../images/pieces/white/knight.png'
+import black from '../../images/pieces/black/knight.png'
+import { Move } from '../movement'
 import Piece from './piece'
-import { cardinals, diagonals } from '../game/coordinates'
+import { cardinals, diagonals } from '../coordinates'
 
 const jumps = [
   cardinals.up.to(diagonals.left_up),
@@ -17,13 +17,13 @@ const jumps = [
 
 export default class Knight extends Piece {
   static letter = 'N'
-  static type = 'knight'
+  static type = 'Knight'
 
   constructor(color) {
-    super(color, { white, black })
+    super(Knight, color, { white, black })
   }
 
-  moves = (pos, state) =>
+  unchecked = (pos, state) =>
     jumps.map(j => new Move(pos.to(j), pos, this)).filter(m => {
       const piece = state.at(m.target)
       return !piece || piece.color !== this.color

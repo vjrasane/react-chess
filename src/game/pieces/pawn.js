@@ -1,21 +1,21 @@
-import { cardinals } from '../game/coordinates'
-import { inBounds } from '../game/state'
-import { Move, March, Enpassant } from '../game/movement'
-import white from '../images/pawn_white.png'
-import black from '../images/pawn_black.png'
+import { cardinals } from '../coordinates'
+import { inBounds } from '../state'
+import { Move, March, Enpassant } from '../movement'
+import white from '../../images/pieces/white/pawn.png'
+import black from '../../images/pieces/black/pawn.png'
 import Piece from './piece'
 
 export default class Pawn extends Piece {
-  static type = 'pawn'
+  static type = 'Pawn'
   static letter = ''
 
   constructor(color) {
-    super(color, { white, black }, { white: 1, black: 6 })
+    super(Pawn, color, { white, black }, { white: 1, black: 6 })
 
     this.direction = { white: cardinals.up, black: cardinals.down }[this.color]
   }
 
-  moves = (pos, state) => {
+  unchecked = (pos, state) => {
     const moves = []
     const once = pos.to(this.direction)
     if (!state.at(once)) {

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import Board from './game/board'
+import Board from './components/board'
 import store from './store'
 import './index.css'
 

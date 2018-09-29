@@ -1,5 +1,4 @@
 import coord from '../coordinates'
-import State from '../state'
 
 export default class Move {
   constructor(target, source, piece) {
@@ -21,13 +20,16 @@ export default class Move {
   }
 
   execute(state) {
-    const moved = new State(state)
-    moved.put(moved.at(this.source), this.target)
-    moved.take(this.source)
+    const moved = state.move(this.source, this.target)
     // ruin castling ?
     moved.castling[this.piece.color] = this.ruin(state)
+
+    if (this.piece.type === 'King') moved.kings[this.piece.color] = this.target
+
     // clear enpassant
-    delete moved.enpassant 
+    delete moved.enpassant
     return moved
   }
+
+  equals = other => this.source.equals(other.source) && this.target.equals(other.target)
 }

@@ -32,23 +32,32 @@ ol, ul {
   position: relative;
 }
 
-.indicator {
-  opacity: 0.5;
-
+.move {
   height: 30%;
   width: 30%;
   
   top: 35%;
   left: 35%;
+}
+
+.check {
+  height: 95%;
+  width: 95%;
+  top: 2.5%;
+  left: 2.5%;
+}
+
+.indicator {
+  opacity: 0.6;
   position: absolute;
 }
 
 .piece {
-  height: 90%;
-  width: 90%;
+  height: 80%;
+  width: 80%;
 
-  top: 5%;
-  left: 5%;
+  top: 10%;
+  left: 10%;
   position: absolute;
 }
 
@@ -82,7 +91,7 @@ ol, ul {
 }
 
 .black {
-    background: #663300;
+    background: #86c2f3;
 }
 
 .green {

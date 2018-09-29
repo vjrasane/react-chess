@@ -3,24 +3,29 @@ import { connect } from 'react-redux'
 import { beginMove, endMove } from '../store/moves'
 import PropTypes from 'prop-types'
 
-import legalIndicator from '../images/green_dot.png'
+import checkIndicator from '../images/indicators/check_glow.png'
+import legalIndicator from '../images/indicators/green_dot.png'
 
 const squareColor = pos => ['black', 'white'][(pos.x + pos.y) % 2]
 
-const Square = ({ turn, position, move, piece, state, beginMove, endMove }) => {
+const Square = ({ move, piece, position, state, check, beginMove, endMove }) => {
   // handles drop on a square and executes the move if it is legal
   const dropPieceOnSquare = () => move.here && endMove(move.here)
   // handles a piece drop when it returns to its original square due to illegal move, clearing indicators
   const dropPiece = () => !move.here && endMove()
   // handles a begin of a square drag, if there is no piece being dragged already
-  const dragPiece = () => !move.ongoing && piece.color === turn && beginMove(piece.moves(position, state))
+  const dragPiece = () => !move.ongoing && piece.color === state.turn && beginMove(piece.moves(position, state))
 
   return (
     <div
       className={ 'square ' + squareColor(position) }
       onDrop={ dropPieceOnSquare }
       onDragOver={ ev => ev.preventDefault() }
-      id={ position.notation() }>
+      id={ position.notation() }
+    >
+      {check && <img
+        src={ checkIndicator }
+        className="indicator check" />}
       {piece && <img
         src={ piece.image }
         onDragStart={ dragPiece }
@@ -29,7 +34,7 @@ const Square = ({ turn, position, move, piece, state, beginMove, endMove }) => {
         className="piece" />}
       {move.here && <img
         src={ legalIndicator }
-        className="indicator" />}
+        className="indicator move" />}
     </div>
   )
 }
@@ -43,8 +48,8 @@ Square.propTypes = {
   piece: PropTypes.object
 }
 
-const mapStateToProps = (/* store */ { moves, turn }, /* props */ { position }) => ({
-  turn,
+const mapStateToProps = (/* store */ { moves }, /* props */ { piece, position, state }) => ({
+  check: piece && piece.type === 'King' && state.check(position, piece.color),
   move: {
     ongoing: moves.length,
     here: moves.find(m => m.target.equals(position)) // move on this square
