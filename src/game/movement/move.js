@@ -17,14 +17,17 @@ export default class Move {
 
       return state.castling[this.piece.color].filter(side => ({ kings, queens }[side]()))
     }
+    return state.castling[this.piece.color]
   }
 
-  execute = state => {
+  execute(state) {
     const moved = new State(state)
     moved.put(moved.at(this.source), this.target)
     moved.take(this.source)
     // ruin castling ?
     moved.castling[this.piece.color] = this.ruin(state)
+    // clear enpassant
+    delete moved.enpassant 
     return moved
   }
 }

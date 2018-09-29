@@ -1,6 +1,6 @@
 import { cardinals } from '../game/coordinates'
 import { inBounds } from '../game/state'
-import { Move } from '../game/movement'
+import { Move, March, Enpassant } from '../game/movement'
 import white from '../images/pawn_white.png'
 import black from '../images/pawn_black.png'
 import Piece from './piece'
@@ -22,8 +22,7 @@ export default class Pawn extends Piece {
       moves.push(new Move(once, pos, this))
       const twice = once.to(this.direction)
       if (pos.y === this.startRow && !state.at(twice)) {
-        // TODO: double move
-        moves.push(new Move(twice, pos, this))
+        moves.push(new March(twice, pos, this, once))
       }
     }
 
@@ -32,9 +31,8 @@ export default class Pawn extends Piece {
         const piece = state.at(m)
         if (piece && piece.color !== this.color) {
           moves.push(new Move(m, pos, this))
-        } else if (state.enpassant && m.equals(state.enpassant)) {
-          // TODO: enpassant move
-          moves.push(new Move(m, pos, this))
+        } else if (state.enpassant && m.equals(state.enpassant.target)) {
+          moves.push(new Enpassant(m, pos, this, state.enpassant))
         }
       }
     })

@@ -1,5 +1,4 @@
 import coord, { cardinals } from '../coordinates'
-import State from '../state'
 import Move from './move'
 
 export default class Castle extends Move {
@@ -8,22 +7,18 @@ export default class Castle extends Move {
     this.side = side
   }
 
-  execute = state => {
-    const moved = new State(state)
+  execute(state) {
+    const moved = super.execute(state)
 
-    const kings = () => moved.put(moved.at(coord(7, this.piece.startRow), this.target.to(cardinals.left)))
-    const queens = () => moved.put(moved.at(coord(0, this.piece.startRow), this.target.to(cardinals.right)))
-
-    {
-      kings, queens
+    const castle = (rookStart, rookEnd) => {
+      moved.put(moved.at(rookStart), rookEnd)
+      moved.take(rookStart)
     }
-    [this.side]()
+    const kings = () => castle(coord(7, this.piece.startRow), this.target.to(cardinals.left))
+    const queens = () => castle(coord(0, this.piece.startRow), this.target.to(cardinals.right))
 
-    moved.put(moved.at(this.source), this.target)
-    moved.take(this.source)
-
-    // ruin castling
-    moved.castling[this.piece.color] = []
+    // without this the interpreter doesn't realize its an object
+    true && { kings, queens }[this.side]() 
     return moved
   }
 }

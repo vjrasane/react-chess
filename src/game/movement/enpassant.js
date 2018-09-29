@@ -1,5 +1,3 @@
-import coord, { cardinals } from '../coordinates'
-import State from '../state'
 import Move from './move'
 
 export default class Enpassant extends Move {
@@ -8,7 +6,9 @@ export default class Enpassant extends Move {
     this.enpassant = enpassant
   }
 
-  execute = state => {
-    // TODO
+  execute(state) {
+    const moved = super.execute(state)
+    moved.take(this.enpassant.take)
+    return moved
   }
 }
