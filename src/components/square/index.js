@@ -18,7 +18,7 @@ const Square = ({ move, piece, position, state, check, beginMove, endMove }) => 
   // handles a piece drop when it returns to its original square due to illegal move, clearing indicators
   const dropPiece = () => !move.here && endMove()
   // handles a begin of a square drag, if there is no piece being dragged already
-  const dragPiece = () => !move.ongoing && piece.color === state.turn && beginMove(piece.moves(position, state))
+  const dragPiece = () => move.allowed && piece.color === state.turn && beginMove(piece.moves(position, state))
 
   return (
     <div
@@ -52,10 +52,10 @@ Square.propTypes = {
   piece: PropTypes.object
 }
 
-const mapStateToProps = (/* store */ { moves }, /* props */ { piece, position, state }) => ({
+const mapStateToProps = (/* store */ { moves, states }, /* props */ { piece, position, state }) => ({
   check: piece && piece.type === 'King' && state.check(position, piece.color),
   move: {
-    ongoing: moves.length,
+    allowed: !states.selected && piece && piece.color === state.turn && !moves.length,
     here: moves.find(m => m.target.equals(position)) // move on this square
   }
 })

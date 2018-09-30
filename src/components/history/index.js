@@ -1,24 +1,29 @@
 import React from 'react'
 import { last } from 'lodash'
 import { connect } from 'react-redux'
-import Button from '@material-ui/core/Button'
-import Forward from '@material-ui/icons/ChevronRight'
-import Last from '@material-ui/icons/LastPage'
-import Backward from '@material-ui/icons/ChevronLeft'
-import First from '@material-ui/icons/FirstPage'
+
+import { selectState } from '../../store/states'
 
 import './index.css'
 
-const button = Icon => (
-  <Button
-    variant="outlined"
-    className="history-button">
-    <Icon />
-  </Button>
-)
+const History = ({ moves, selected, selectState }) => {
+  const MoveCell = ({ state }) => (
+    <td
+      className={ 'move-cell' + (state === selected ? ' selected-state' : '') }
+      onClick={ () => selectState(state) }>
+      {state.move.target.notation()}
+    </td>
+  )
 
-const History = ({ moves }) => (
-  <div className="history-container">
+  const MoveRow = ({ moves }) => (
+    <tr className="table-row">
+      <td className="num-cell">{moves.num}</td>
+      <MoveCell state={ moves.white } />
+      {moves.black && <MoveCell state={ moves.black } />}
+    </tr>
+  )
+
+  return (
     <div className="history-moves-container">
       <table className="history-table">
         <tbody>
@@ -28,42 +33,37 @@ const History = ({ moves }) => (
             <th>Black</th>
           </tr>
           {moves.map(m => (
-            <tr
+            <MoveRow
               key={ m.num }
-              className="table-row">
-              <td className="num-cell">{m.num}</td>
-              <td className="move-cell white-move">{m.white.target.notation()}</td>
-              <td className="move-cell">{m.black ? m.black.target.notation() : ''}</td>
-            </tr>
+              moves={ m } />
           ))}
         </tbody>
       </table>
     </div>
-    <div className="history-buttons-container">
-      {button(First)}
-      {button(Backward)}
-      {button(Forward)}
-      {button(Last)}
-    </div>
-  </div>
-)
-
-const getMoves = history => {
-  const movedStates = history.slice(1).map(h => h.move)
-  const moves = movedStates.reduce((acc, curr, index) => {
-    if (!acc.length || last(acc).black) {
-      return [...acc, { index, num: Math.round(index / 2), white: curr }]
-    }
-    last(acc).black = curr
-    return acc
-  }, [])
-  return moves
+  )
 }
 
-const mapStateToProps = ({ history }) => ({
-  moves: getMoves(history)
+const mapStateToProps = ({ states }) => ({
+  moves: states.history
+    .slice(1) // ignore the first state as it does not have a move
+    .reduce(
+      (/* an array of move row objects */ acc, /* current state */ curr, /* state index */ index) =>
+        // white moves are always on even indices
+        index % 2 === 0
+          ? // create a new move row object
+          [...acc, { num: Math.round(index / 2), white: curr }]
+          : // edit the last move row object
+          [...acc.slice(0, -1), { ...last(acc), black: curr }],
+      []
+    ),
+  selected: states.selected || last(states.history)
 })
 
-const CONNECTED = connect(mapStateToProps)(History)
+const actionCreators = { selectState }
+
+const CONNECTED = connect(
+  mapStateToProps,
+  actionCreators
+)(History)
 
 export default CONNECTED

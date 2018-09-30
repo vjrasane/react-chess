@@ -1,10 +1,10 @@
 import { createStore, combineReducers } from 'redux'
 import moves from './moves'
-import history from './history'
+import states from './states'
 
 const reducer = combineReducers({
   moves,
-  history
+  states
 })
 
 export default createStore(reducer)

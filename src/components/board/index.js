@@ -36,8 +36,8 @@ const Board = ({ state }) => (
   </div>
 )
 
-const mapStateToProps = (/* store */ { history }) => ({
-  state: last(history),
+const mapStateToProps = (/* store */ { states }) => ({
+  state: states.selected || last(states.history),
 })
 
 const CONNECTED = connect(mapStateToProps)(Board)

@@ -14,7 +14,7 @@ export const beginMove = moves => ({
   data: moves
 })
 
-export const endMove = move => ({
+export const endMove = state => ({
   type: 'END_MOVE',
-  data: move
+  data: state
 })

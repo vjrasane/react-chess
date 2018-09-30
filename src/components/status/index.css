@@ -1,0 +1,22 @@
+.status-indicator-container {
+  height: 10%;
+  width: 100%;
+  border: solid 0.1px #cccccc;
+  background-color: #e4e4e4;
+  position: relative;
+}
+
+.status-indicator-image-block {
+  background-color: #e0e0e0;
+  height: 100%;
+  width: 25%;
+  border: solid 0.1px #cccccc;
+  position: relative;
+}
+
+.status-indicator-image {
+  height: 80%;
+  top: 10%;
+  left: 10%;
+  position: absolute;
+}
