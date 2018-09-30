@@ -1,0 +1,23 @@
+.square {
+  height: 100%;
+  width: 12.5%;
+  float: left;
+  position: relative;
+}
+
+.piece {
+  height: 80%;
+  width: 80%;
+
+  top: 10%;
+  left: 10%;
+  position: absolute;
+}
+
+.white {
+  background: #eeeed2;
+}
+
+.black {
+  background: #769656;
+}

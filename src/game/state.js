@@ -51,11 +51,13 @@ class State {
 
   legal = () => this.board.some((row, y) => row.some((piece, x) => piece && piece.color === this.turn && piece.moves(coord(x, y), this).length))
 
-  move = (source, target) => {
+  execute = (move) => {
     const moved = new State(this)
-    moved.put(moved.at(source), target)
-    moved.take(source)
+    moved.put(moved.at(move.source), move.target)
+    moved.take(move.source)
     moved.turn = players[(players.indexOf(this.turn) + 1) % players.length]
+    
+    moved.move = move
     return moved
   }
 }

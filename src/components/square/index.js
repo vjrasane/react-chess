@@ -1,12 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { beginMove, endMove } from '../store/moves'
+import { beginMove, endMove } from '../../store/moves'
 import PropTypes from 'prop-types'
 
-import checkIndicator from '../images/indicators/orange_glow.png'
-import checkmateIndicator from '../images/indicators/red_glow.png'
-import stalemateIndicator from '../images/indicators/blue_glow.png'
-import moveIndicator from '../images/indicators/green_dot.png'
+import checkIndicator from '../../images/indicators/orange_glow.png'
+import checkmateIndicator from '../../images/indicators/red_glow.png'
+import stalemateIndicator from '../../images/indicators/blue_glow.png'
+import moveIndicator from '../../images/indicators/green_dot.png'
+
+import './index.css'
 
 const squareColor = pos => ['black', 'white'][(pos.x + pos.y) % 2]
 

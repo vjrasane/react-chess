@@ -20,7 +20,7 @@ export default class Move {
   }
 
   execute(state) {
-    const moved = state.move(this.source, this.target)
+    const moved = state.execute(this)
     // ruin castling ?
     moved.castling[this.piece.color] = this.ruin(state)
 

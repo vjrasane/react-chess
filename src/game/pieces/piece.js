@@ -12,15 +12,11 @@ class Piece {
 
   unchecked = () => []
 
-  moves = (pos, state) => {
-    const moves = this.unchecked(pos, state)
-    return moves.filter(m => {
+  moves = (pos, state) =>
+    this.unchecked(pos, state).filter(m => {
       const moved = m.execute(state)
-      const king = moved.kings[this.color]
-      const check = moved.check(king, this.color)
-      return !check
+      return !moved.check(moved.kings[this.color], this.color)
     })
-  }
 }
 
 Piece.prototype.toString = () => Piece.letter

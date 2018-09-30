@@ -1,0 +1,10 @@
+.board-area {
+  width: 70vh;
+  height: 70vh;
+  flex-shrink: 0;
+}
+
+.board-row {
+  height: 12.5%;
+  width: 100%;
+}

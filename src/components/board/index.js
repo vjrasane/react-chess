@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { last } from 'lodash'
-import Square from './square'
-import coord from '../game/coordinates'
+import Square from '../square'
+import coord from '../../game/coordinates'
+
+import './index.css'
 
 const Row = ({ squares, rowNum, state }) => (
   <div className="board-row">

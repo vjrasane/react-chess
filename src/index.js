@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import Board from './components/board'
+import Game from './components/game'
 import store from './store'
 import './index.css'
 
@@ -11,7 +11,7 @@ store.dispatch({ type: 'INIT_GAME' })
 
 const component = (
   <Provider store={ store }>
-    <Board />
+    <Game />
   </Provider>
 )
 
