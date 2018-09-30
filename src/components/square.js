@@ -3,8 +3,10 @@ import { connect } from 'react-redux'
 import { beginMove, endMove } from '../store/moves'
 import PropTypes from 'prop-types'
 
-import checkIndicator from '../images/indicators/check_glow.png'
-import legalIndicator from '../images/indicators/green_dot.png'
+import checkIndicator from '../images/indicators/orange_glow.png'
+import checkmateIndicator from '../images/indicators/red_glow.png'
+import stalemateIndicator from '../images/indicators/blue_glow.png'
+import moveIndicator from '../images/indicators/green_dot.png'
 
 const squareColor = pos => ['black', 'white'][(pos.x + pos.y) % 2]
 
@@ -33,7 +35,7 @@ const Square = ({ move, piece, position, state, check, beginMove, endMove }) => 
         alt=""
         className="piece" />}
       {move.here && <img
-        src={ legalIndicator }
+        src={ moveIndicator }
         className="indicator move" />}
     </div>
   )

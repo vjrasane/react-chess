@@ -24,6 +24,7 @@ module.exports = {
     ],
     'no-console': 'warn',
     'no-unused-vars': 'warn',
+    'no-case-declarations': 'warn',
     indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
