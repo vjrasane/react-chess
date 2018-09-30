@@ -55,7 +55,7 @@ Square.propTypes = {
 const mapStateToProps = (/* store */ { moves, states }, /* props */ { piece, position, state }) => ({
   check: piece && piece.type === 'King' && state.check(position, piece.color),
   move: {
-    allowed: !states.selected && piece && piece.color === state.turn && !moves.length,
+    allowed: piece && piece.color === state.turn && !moves.length,
     here: moves.find(m => m.target.equals(position)) // move on this square
   }
 })

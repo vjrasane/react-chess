@@ -4,6 +4,7 @@ import Preload from '../preload'
 import History from '../history'
 import Controls from '../controls'
 import Status from '../status'
+import Timers from '../timers'
 
 import check from '../../images/indicators/orange_glow.png'
 import checkmate from '../../images/indicators/red_glow.png'
@@ -18,6 +19,7 @@ class Game extends React.Component {
       <Board />
       <div className="sidebar-container">
         <Status />
+        <Timers />
         <History />
         <Controls />
       </div>
