@@ -11,7 +11,7 @@ const History = ({ moves, selected, selectState }) => {
     <td
       className={ 'move-cell' + (state === selected ? ' selected-state' : '') }
       onClick={ () => selectState(state) }>
-      {state.move.target.notation()}
+      {state.notation()}
     </td>
   )
 

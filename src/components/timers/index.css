@@ -6,9 +6,12 @@
   border-bottom: solid 0.1px #CCCCCC;
   background-color: #f0f0f0;
   display: flex;
-  justify-content: space-evenly;
 }
 
 .timer {
-  font-size: 3vh
+  font-size: 3vh;
+  align-self: center;
+  text-align: center;
+  border-right: solid 0.1px #CCCCCC;
+  width: 50%
 }

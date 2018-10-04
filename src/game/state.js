@@ -73,6 +73,8 @@ class State {
     moved.move = move
     return moved
   }
+
+  notation = () => this.move.notation() + (this.status ? { flagged: '', check: '+', checkmate: '#' }[this.status] : '')
 }
 
 export const inBounds = pos => pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8

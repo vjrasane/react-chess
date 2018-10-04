@@ -32,4 +32,6 @@ export default class Move {
   }
 
   equals = other => this.source.equals(other.source) && this.target.equals(other.target)
+
+  notation = () => this.piece.letter + this.target.notation()
 }

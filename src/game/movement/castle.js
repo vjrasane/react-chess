@@ -21,4 +21,6 @@ export default class Castle extends Move {
     true && { kings, queens }[this.side]() 
     return moved
   }
+
+  notation = () => ({ kings: 'O-O', queens: 'O-O-O' }[this.side])
 }

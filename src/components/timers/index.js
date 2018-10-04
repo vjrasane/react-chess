@@ -6,7 +6,8 @@ import moment from 'moment'
 import { outOfTime } from '../../store/states'
 import './index.css'
 
-const prettyTime = millis => moment.utc(millis).format('mm:ss')
+const millisLimit = 10 /* seconds */ * 1000 /* milliseconds */
+const prettyTime = millis => moment.utc(millis).format(millis <= millisLimit ? 'mm:ss:SS' : 'mm:ss')
 
 class Timer extends React.Component {
   static initial = 5 /* minutes */ * 60 /* seconds */ * 1000 /* milliseconds */
@@ -37,7 +38,7 @@ class Timer extends React.Component {
 
     if (this.state.remaining <= 0) {
       this.props.over || this.props.outOfTime()
-      if (this.state.remaining < 0) this.setState({ remaining: 0 })
+      this.state.remaining < 0 && this.setState({ remaining: 0 })
     }
   }
 
