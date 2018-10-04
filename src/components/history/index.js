@@ -26,12 +26,14 @@ const History = ({ moves, selected, selectState }) => {
   return (
     <div className="history-moves-container">
       <table className="history-table">
-        <tbody>
+        <thead>
           <tr className="header-row">
             <th>#</th>
             <th>White</th>
             <th>Black</th>
           </tr>
+        </thead>
+        <tbody className=".history-table">
           {moves.map(m => (
             <MoveRow
               key={ m.num }

@@ -19,7 +19,7 @@ export default class King extends Piece {
       const uncheckedSquares = times(3, n => pos.to(dir.times(n)))
       const emptySquares = times(emptyNum, n => pos.to(dir.times(n + 1)))
 
-      const unchecked = uncheckedSquares.every(p => !state.check(p, this.color))
+      const unchecked = uncheckedSquares.every(p => !state.check(this.color, p))
       const empty = emptySquares.every(p => !state.at(p))
       return empty && unchecked ? new Castle(last(uncheckedSquares), pos, this, side) : false
     }

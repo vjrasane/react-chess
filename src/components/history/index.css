@@ -1,7 +1,9 @@
 .history-moves-container {
   width: 100%;
-  border: solid 0.1px #CCCCCC;
+  border-left: solid 0.1px #CCCCCC;
+  border-right: solid 0.1px #CCCCCC;
   flex-grow: 1;
+  overflow-y: auto;
 }
 
 table {
@@ -30,7 +32,9 @@ table {
 
 .header-row {
   height: 30px;
-  border: solid 0.1px #CCCCCC;
+  border-left: solid 0.1px #CCCCCC;
+  border-right: solid 0.1px #CCCCCC;
+  border-bottom: solid 0.1px #CCCCCC;
   background-color: #EAEAEA;
   color: #7F7F7F;
 }

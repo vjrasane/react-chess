@@ -31,11 +31,12 @@ class State {
   }
 
   at = pos => inBounds(pos) && this.board[pos.y][pos.x]
-
   put = (piece, pos) => inBounds(pos) && (this.board[pos.y][pos.x] = piece)
   take = pos => this.put(undefined, pos)
 
-  check = (pos, color) =>
+  next = () => players[(players.indexOf(this.turn) + 1) % players.length]
+
+  check = (color, pos) =>
     // is there a row...
     this.board.some((row, y) =>
       // that contains a piece...
@@ -45,18 +46,30 @@ class State {
           // thats not the same color
           piece.color !== color &&
           // and has a move that targets the given position
-          piece.takes(coord(x, y), this).some(m => m.target.equals(pos))
+          piece.takes(coord(x, y), this).some(m => m.target.equals(pos || this.kings[color]))
       )
     )
 
-  legal = () => this.board.some((row, y) => row.some((piece, x) => piece && piece.color === this.turn && piece.moves(coord(x, y), this).length))
+  legal = () =>
+    // is there a row...
+    this.board.some((row, y) =>
+      // that contains a piece...
+      row.some(
+        (piece, x) =>
+          piece &&
+          // that belongs to player in turn
+          piece.color === this.turn &&
+          // and has a legal move
+          piece.moves(coord(x, y), this).length
+      )
+    )
 
-  execute = (move) => {
+  execute = move => {
     const moved = new State(this)
     moved.put(moved.at(move.source), move.target)
     moved.take(move.source)
-    moved.turn = players[(players.indexOf(this.turn) + 1) % players.length]
-    
+    moved.turn = this.next()
+
     moved.move = move
     return moved
   }

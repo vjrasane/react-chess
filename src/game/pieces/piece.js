@@ -15,7 +15,7 @@ class Piece {
   moves = (pos, state) =>
     this.unchecked(pos, state).filter(m => {
       const moved = m.execute(state)
-      return !moved.check(moved.kings[this.color], this.color)
+      return !moved.check(this.color)
     })
 }
 

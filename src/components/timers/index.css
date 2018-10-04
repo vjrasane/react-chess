@@ -3,11 +3,12 @@
   width: 100%;
   border-left: solid 0.1px #cccccc;
   border-right: solid 0.1px #cccccc;
+  border-bottom: solid 0.1px #CCCCCC;
   background-color: #f0f0f0;
   display: flex;
   justify-content: space-evenly;
 }
 
 .timer {
-  font-size: 2vw
+  font-size: 3vh
 }
