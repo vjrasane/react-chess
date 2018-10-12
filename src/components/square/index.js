@@ -1,14 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { beginMove, endMove } from '../../store/moves'
-import PropTypes from 'prop-types'
+import { toggleMenu } from '../../store/queening'
 import Indicator from '../indicator'
 
 import './index.css'
 
 const squareColor = pos => ['black', 'white'][(pos.x + pos.y) % 2]
 
-const Square = ({ move, piece, position, state, status, beginMove, endMove }) => {
+const Square = ({ move, piece, position, state, status, beginMove, endMove, toggleMenu }) => {
   // handles drop on a square and executes the move if it is legal
   const dropPieceOnSquare = () => move.here && endMove(move.here)
   // handles a piece drop when it returns to its original square due to illegal move, clearing indicators
@@ -18,10 +18,12 @@ const Square = ({ move, piece, position, state, status, beginMove, endMove }) =>
 
   return (
     <div
-      className={ 'square ' + squareColor(position) }
+      className={ `square ${squareColor(position)}` }
+      onMouseDown={ () => toggleMenu(position) }
       onDrop={ dropPieceOnSquare }
       onDragOver={ ev => ev.preventDefault() }
-      id={ position.notation() }>
+      id={ position.notation() }
+    >
       {status && <Indicator type={ status } />}
       {piece && <img
         src={ piece.image }
@@ -34,24 +36,20 @@ const Square = ({ move, piece, position, state, status, beginMove, endMove }) =>
   )
 }
 
-Square.propTypes = {
-  position: PropTypes.shape({
-    notation: PropTypes.func,
-    x: PropTypes.number,
-    y: PropTypes.number
-  }).isRequired,
-  piece: PropTypes.object
-}
-
 const mapStateToProps = (/* store */ { moves, states }, /* props */ { piece, position, state }) => ({
   status: piece && piece.type === 'King' && piece.color === state.turn && state.status,
   move: {
-    allowed: !states.result && piece && piece.color === state.turn && !moves.length,
+    allowed:
+      !states.selected && // not viewing history
+      !states.result && // game has not ended
+      piece && // there is a piece on this square
+      piece.color === state.turn && // piece color is in turn
+      !moves.length, // and now previous move is in progress
     here: moves.find(m => m.target.equals(position)) // move on this square
   }
 })
 
-const actionCreators = { beginMove, endMove }
+const actionCreators = { beginMove, endMove, toggleMenu }
 
 const CONNECTED = connect(
   mapStateToProps,

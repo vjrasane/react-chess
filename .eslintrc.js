@@ -22,6 +22,7 @@ module.exports = {
         code: 150
       }
     ],
+    'prefer-template': 'error',
     'no-console': 'warn',
     'no-unused-vars': 'warn',
     'no-case-declarations': 'warn',

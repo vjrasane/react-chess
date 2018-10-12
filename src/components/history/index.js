@@ -9,7 +9,7 @@ import './index.css'
 const History = ({ moves, selected, selectState }) => {
   const MoveCell = ({ state }) => (
     <td
-      className={ 'move-cell' + (state === selected ? ' selected-state' : '') }
+      className={ `move-cell${state === selected ? ' selected-state' : ''}` }
       onClick={ () => selectState(state) }>
       {state.notation()}
     </td>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Board from '../board'
 import Preload from '../preload'
 import History from '../history'
@@ -15,7 +16,9 @@ import './index.css'
 
 class Game extends React.Component {
   render = () => (
-    <div className="game-container">
+    <div
+      className="game-container"
+      onMouseMove={ this.handleMouseMove }>
       <Board />
       <div className="sidebar-container">
         <Status />

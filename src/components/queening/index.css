@@ -1,15 +1,3 @@
-.board-area {
-  width: 70vh;
-  height: 70vh;
-  flex-shrink: 0;
-  position: relative;
-}
-
-.board-row {
-  height: 12.5%;
-  width: 100%;
-}
-
 .queening-overlay {
   position: absolute;
 

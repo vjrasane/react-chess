@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { last } from 'lodash'
 import Square from '../square'
+import QueeningMenu from '../queening'
 import coord from '../../game/coordinates'
 
 import './index.css'
@@ -21,23 +22,25 @@ const Row = ({ squares, rowNum, state }) => (
   </div>
 )
 
-const Board = ({ state }) => (
+const Board = ({ state, queening }) => (
   <div className="board-area">
     {[...state.board].reverse().map((squares, revRow) => {
       const rowNum = 7 - revRow
       return (
         <Row
-          key={ 'row' + rowNum }
+          key={ `row${rowNum}` }
           squares={ squares }
           rowNum={ rowNum }
           state={ state } />
       )
     })}
+    {queening && <QueeningMenu position={ queening.position } />}
   </div>
 )
 
-const mapStateToProps = (/* store */ { states }) => ({
+const mapStateToProps = (/* store */ { states, queening }) => ({
   state: states.selected || last(states.history),
+  queening
 })
 
 const CONNECTED = connect(mapStateToProps)(Board)

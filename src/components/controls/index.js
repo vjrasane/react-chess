@@ -2,11 +2,10 @@ import React from 'react'
 import { first, last } from 'lodash'
 import { connect } from 'react-redux'
 
-import Button from '@material-ui/core/Button'
-import Forward from '@material-ui/icons/ChevronRight'
-import Last from '@material-ui/icons/LastPage'
-import Backward from '@material-ui/icons/ChevronLeft'
-import First from '@material-ui/icons/FirstPage'
+import forward from '../../images/buttons/forward.png'
+import backward from '../../images/buttons/backward.png'
+import backwardDouble from '../../images/buttons/backward_double.png'
+import forwardDouble from '../../images/buttons/forward_double.png'
 
 import { selectState } from '../../store/states'
 
@@ -15,20 +14,21 @@ import './index.css'
 const Controls = ({ history, selected, selectState }) => {
   const next = () => history[Math.min(history.indexOf(selected) + 1, history.length - 1)]
   const prev = () => history[Math.max(history.indexOf(selected) - 1, 0)]
-  const button = (Icon, click) => (
-    <Button
-      variant="outlined"
+  const button = (image, click) => (
+    <div
       className="control-button"
       onClick={ () => selectState(click()) }>
-      <Icon />
-    </Button>
+      <img
+        src={ image }
+        className="control-button-icon" />
+    </div>
   )
   return (
     <div className="control-buttons-container">
-      {button(First, () => first(history))}
-      {button(Backward, prev)}
-      {button(Forward, next)}
-      {button(Last, () => last(history))}
+      {button(backwardDouble, () => first(history))}
+      {button(backward, prev)}
+      {button(forward, next)}
+      {button(forwardDouble, () => last(history))}
     </div>
   )
 }

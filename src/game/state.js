@@ -1,6 +1,11 @@
 import { first, times, cloneDeep } from 'lodash'
 import coord from './coordinates'
-import { forLetter, Pawn } from './pieces'
+import { pieces, Pawn } from './pieces'
+
+export const forLetter = (letter, color) => {
+  const Class = pieces.find(P => P.letter === letter)
+  return new Class(color)
+}
 
 const officers = color => 'RNBQKBNR'.split('').map(l => forLetter(l, color))
 const empty = () => times(8, () => {})

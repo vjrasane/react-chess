@@ -16,7 +16,7 @@ const indicators = {
 const Indicator = ({ type }) => (
   <img
     src={ indicators[type] }
-    className={ 'indicator ' + type } />
+    className={ `indicator ${type}` } />
 )
 
 export default Indicator

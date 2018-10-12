@@ -1,10 +1,30 @@
 .control-button {
   height: 100%;
+  width: 23%;
+  border: solid 0.5px #CCCCCC;
+  border-radius: 3px;
   flex-shrink: 1;
+}
+
+.control-button:hover {
+  background-color: #e4e4e4;
+}
+
+.control-button:active {
+  background-color: #7F7F7F;
+}
+
+.control-button-icon {
+  height: 84%;
+  display: block;
+  margin: 0 auto;
+  margin-top: 5%;
+  opacity: 0.4;
 }
 
 .control-buttons-container {
   height: 7%;
+  min-height: 25px;
   width: 100%;
 
   margin-top: 3px;
