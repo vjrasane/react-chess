@@ -1,13 +1,20 @@
 export default (state = null, action) => {
   switch (action.type) {
-  case 'TOGGLE_MENU':
-    return state ? null : { position: action.position }
+  case 'BEGIN_QEENING':
+    return { move: action.move }
+  case 'END_QUEENING':
+    return null
   default:
     return state
   }
 }
 
-export const toggleMenu = (position) => ({
-  type: 'TOGGLE_MENU',
-  position
+export const beginQueening = move => ({
+  type: 'BEGIN_QEENING',
+  move
 })
+
+export const endQueening = () => ({
+  type: 'END_QUEENING'
+})
+

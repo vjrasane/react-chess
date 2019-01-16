@@ -4,6 +4,7 @@ import Move from './move'
 import Castle from './castle'
 import March from './march'
 import Enpassant from './enpassant'
+import Queening from './queening'
 
 const toDirection = (pos, dir, state) => {
   const moves = []
@@ -28,4 +29,4 @@ const directionMoves = (pos, state, directions) => Object.values(directions).red
 export const diagonalMoves = (pos, state) => directionMoves(pos, state, diagonals)
 export const cardinalMoves = (pos, state) => directionMoves(pos, state, cardinals)
 
-export { Move, Castle, March, Enpassant }
+export { Move, Castle, March, Enpassant, Queening }

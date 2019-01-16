@@ -1,16 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Queening } from '../../game/movement'
 import { beginMove, endMove } from '../../store/moves'
-import { toggleMenu } from '../../store/queening'
+import { beginQueening } from '../../store/queening'
 import Indicator from '../indicator'
 
 import './index.css'
 
 const squareColor = pos => ['black', 'white'][(pos.x + pos.y) % 2]
 
-const Square = ({ move, piece, position, state, status, beginMove, endMove, toggleMenu }) => {
+const Square = ({ move, piece, position, state, status, beginMove, endMove, beginQueening }) => {
   // handles drop on a square and executes the move if it is legal
-  const dropPieceOnSquare = () => move.here && endMove(move.here)
+  const dropPieceOnSquare = () => move.here && move.here instanceof Queening ? beginQueening(move.here) : endMove(move.here)
   // handles a piece drop when it returns to its original square due to illegal move, clearing indicators
   const dropPiece = () => !move.here && endMove()
   // handles a begin of a square drag, if there is no piece being dragged already
@@ -19,7 +20,6 @@ const Square = ({ move, piece, position, state, status, beginMove, endMove, togg
   return (
     <div
       className={ `square ${squareColor(position)}` }
-      onMouseDown={ () => toggleMenu(position) }
       onDrop={ dropPieceOnSquare }
       onDragOver={ ev => ev.preventDefault() }
       id={ position.notation() }
@@ -44,12 +44,12 @@ const mapStateToProps = (/* store */ { moves, states }, /* props */ { piece, pos
       !states.result && // game has not ended
       piece && // there is a piece on this square
       piece.color === state.turn && // piece color is in turn
-      !moves.length, // and now previous move is in progress
+      !moves.length, // and no previous move is in progress
     here: moves.find(m => m.target.equals(position)) // move on this square
   }
 })
 
-const actionCreators = { beginMove, endMove, toggleMenu }
+const actionCreators = { beginMove, endMove, beginQueening }
 
 const CONNECTED = connect(
   mapStateToProps,

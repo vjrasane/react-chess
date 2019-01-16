@@ -34,12 +34,17 @@ const Board = ({ state, queening }) => (
           state={ state } />
       )
     })}
-    {queening && <QueeningMenu position={ queening.position } />}
+    {queening && <QueeningMenu move={ queening.move } />}
   </div>
 )
 
+const getCurrentState = (states, queening) => {
+  const lastState = last(states.history)
+  return queening ? lastState.execute(queening.move) : states.selected || lastState
+}
+
 const mapStateToProps = (/* store */ { states, queening }) => ({
-  state: states.selected || last(states.history),
+  state: getCurrentState(states, queening),
   queening
 })
 

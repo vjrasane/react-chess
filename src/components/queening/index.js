@@ -1,5 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import background from '../../images/indicators/cyan_circle.png'
+import { endQueening } from '../../store/queening'
 import { forLetter } from '../../game/state'
 
 const positionStyle = position => {
@@ -21,22 +23,37 @@ const QueeningIcon = ({ piece }) => (
       src={ background } />
     <img
       className="queening-image"
-      src={ piece.image } />
+      src={ piece.image }
+      onClick={ () => console.log(piece) } />
   </div>
 )
 
-const QueeningMenu = ({ position }) => (
-  <div className="queening-overlay">
-    <div
-      className="queening-menu"
-      style={ positionStyle(position) }>
-      {'QRBN'.split('').map(l => (
-        <QueeningIcon
-          key={ l }
-          piece={ forLetter(l, 'white') } />
-      ))}
-    </div>
-  </div>
-)
+const QueeningMenu = ({ queening, endQueening }) => {
+  return (
+    queening ? <div
+      className="queening-overlay"
+      onClick={ endQueening }>
+      <div
+        className="queening-menu"
+        style={ positionStyle(queening) }>
+        {'QRBN'.split('').map(l => (
+          <QueeningIcon
+            key={ l }
+            piece={ forLetter(l, 'white') } />
+        ))}
+      </div>
+    </div> : null
+  )
+}
 
-export default QueeningMenu
+const mapStateToProps = (/* store */ { queening }) => ({
+  queening: queening && queening.move
+})
+const actionCreators = { endQueening }
+const CONNECTED = connect(
+  mapStateToProps,
+  actionCreators
+)(QueeningMenu)
+
+export { QueeningMenu as RawComponent }
+export default CONNECTED
